@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "user": "Jose Cano",
+    "company": "Vodafone",
+    "telephones": [
+      "123456789",
+      "123456755"
+    ],
+    "extension": "123",
+    "registrationDate": "2024-09-09T10:27:49.6511336+02:00",
+    "cancellationDate": "2024-09-24T10:27:49.6511336+02:00",
+    "rate": "ABC",
+    "link": "https://vuejs.org"
+  },
+  {
+    "id": 2,
+    "user": "Alvaro Cano",
+    "company": "Movistar",
+    "telephones": [
+      "987654321",
+      "564456465"
+    ],
+    "extension": "321",
+    "registrationDate": "2024-09-19T10:27:49.6511336+02:00",
+    "cancellationDate": "2024-10-12T10:27:49.6511336+02:00",
+    "rate": "Learn to google data in order to build apps",
+    "link": "https://google.com"
+  },
+  {
+    "id": 3,
+    "user": "Eva Cano",
+    "company": "Orange",
+    "telephones": [
+      "692345678"
+    ],
+    "extension": "578",
+    "registrationDate": "2024-09-18T10:27:49.6511336+02:00",
+    "cancellationDate": "2025-10-24T10:27:49.6511336+02:00",
+    "rate": "Learn about kafka ecosystem",
+    "link": "https://kafka.apache.org/"
+  },
+  {
+    "id": 4,
+    "user": "Raquel Gil",
+    "company": "Vodafone",
+    "telephones": [
+      "697452563",
+      "630505050"
+    ],
+    "extension": "731",
+    "registrationDate": "2023-08-16T10:27:49.6511336+02:00",
+    "cancellationDate": "2026-05-12T10:27:49.6511336+02:00",
+    "rate": "The official Spring documentation",
+    "link": "https://spring.io/"
+  }
+]
