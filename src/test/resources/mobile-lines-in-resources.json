@@ -1,57 +1,111 @@
 [
   {
-    "id": 1,
-    "user": "Jose Cano",
-    "company": "Vodafone",
-    "telephones": [
-      "123456789",
-      "123456755"
+    "login": "jskno",
+    "fullName": "Jose Cano",
+    "delegation": "Telaviv",
+    "mobileLines": [
+      {
+        "user": null,
+        "id": 1,
+        "company": "Vodafone",
+        "telephone": "123456789",
+        "extension": "123",
+        "registrationDate": "2024-09-12",
+        "cancellationDate": "2024-09-27",
+        "notes": "Some notes about Jose Cano telephone 1",
+        "rate": "ABC"
+      },
+      {
+        "user": null,
+        "id": 2,
+        "company": "Vodafone",
+        "telephone": "123456755",
+        "extension": "123",
+        "registrationDate": "2024-09-12",
+        "cancellationDate": "2024-09-27",
+        "notes": "Some notes about Jose Cano telephone 2",
+        "rate": "ABC"
+      }
     ],
-    "extension": "123",
-    "registrationDate": "2024-09-09T10:27:49.6511336+02:00",
-    "cancellationDate": "2024-09-24T10:27:49.6511336+02:00",
-    "rate": "ABC",
     "link": "https://vuejs.org"
   },
   {
-    "id": 2,
-    "user": "Alvaro Cano",
-    "company": "Movistar",
-    "telephones": [
-      "987654321",
-      "564456465"
+    "login": "arocano",
+    "fullName": "Alvaro Cano",
+    "delegation": "London",
+    "mobileLines": [
+      {
+        "user": null,
+        "id": 3,
+        "company": "Vodafone",
+        "telephone": "987654321",
+        "extension": "123",
+        "registrationDate": "2024-09-12",
+        "cancellationDate": "2024-09-27",
+        "notes": null,
+        "rate": "ABCDER"
+      },
+      {
+        "user": null,
+        "id": 4,
+        "company": "Movistar",
+        "telephone": "564456465",
+        "extension": "124",
+        "registrationDate": "2024-09-12",
+        "cancellationDate": "2024-09-27",
+        "notes": null,
+        "rate": "Learn to google data in order to build apps"
+      }
     ],
-    "extension": "321",
-    "registrationDate": "2024-09-19T10:27:49.6511336+02:00",
-    "cancellationDate": "2024-10-12T10:27:49.6511336+02:00",
-    "rate": "Learn to google data in order to build apps",
     "link": "https://google.com"
   },
   {
-    "id": 3,
-    "user": "Eva Cano",
-    "company": "Orange",
-    "telephones": [
-      "692345678"
+    "login": "evacano",
+    "fullName": "Eva Cano",
+    "delegation": "Geneve",
+    "mobileLines": [
+      {
+        "user": null,
+        "id": 5,
+        "company": "Orange",
+        "telephone": "692345678",
+        "extension": "578",
+        "registrationDate": "2024-09-21",
+        "cancellationDate": "2025-10-27",
+        "notes": "Some notes about Eva Cano telephone 1",
+        "rate": "Learn about kafka ecosystem"
+      }
     ],
-    "extension": "578",
-    "registrationDate": "2024-09-18T10:27:49.6511336+02:00",
-    "cancellationDate": "2025-10-24T10:27:49.6511336+02:00",
-    "rate": "Learn about kafka ecosystem",
     "link": "https://kafka.apache.org/"
   },
   {
-    "id": 4,
-    "user": "Raquel Gil",
-    "company": "Vodafone",
-    "telephones": [
-      "697452563",
-      "630505050"
+    "login": "seraim",
+    "fullName": "Raquel Gil",
+    "delegation": "Paris",
+    "mobileLines": [
+      {
+        "user": null,
+        "id": 6,
+        "company": "Vodafone",
+        "telephone": "697452563",
+        "extension": "731",
+        "registrationDate": "2023-08-19",
+        "cancellationDate": "2026-02-04",
+        "notes": "Some notes about Raquel Gil telephone 1",
+        "rate": "The official Spring documentation"
+      },
+      {
+        "user": null,
+        "id": 4,
+        "company": "Movistar",
+        "telephone": "630505050",
+        "extension": "731566",
+        "registrationDate": "2024-07-04",
+        "cancellationDate": "2026-08-23",
+        "notes": "Some notes about Raquel Gil telephone 2",
+        "rate": "EEDDFFRR"
+      }
     ],
-    "extension": "731",
-    "registrationDate": "2023-08-16T10:27:49.6511336+02:00",
-    "cancellationDate": "2026-05-12T10:27:49.6511336+02:00",
-    "rate": "The official Spring documentation",
     "link": "https://spring.io/"
   }
 ]

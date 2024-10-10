@@ -1,0 +1,1 @@
+drop table mobile_lines;

@@ -1,45 +1,46 @@
 package com.jskno.mobile.lines.integration.service;
 
-import com.jskno.mobile.lines.domain.MobileLineDTO;
-import com.jskno.mobile.lines.service.MobileLineService;
-import java.time.OffsetDateTime;
-import java.util.List;
+import com.jskno.mobile.lines.domain.CreateMobileLineDTO;
+import com.jskno.mobile.lines.domain.GetMobileLineDTO;
+import com.jskno.mobile.lines.service.line.MobileLineFileService;
+import java.time.LocalDate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class MobileLineServiceTest {
 
     @Autowired
-    private MobileLineService mobileLineService;
+    private MobileLineFileService mobileLineService;
 
     @Test
     void test() {
         // Given
-        String path = "";
+        String user = "jskno";
+        Long lineId = 1L;
 
         // When
-        List<MobileLineDTO> mobileLines = mobileLineService.retrieveMobileLinesFromFile();
+        GetMobileLineDTO mobileLine = mobileLineService.retrieveMobileLine(user, lineId);
 
         // Then
-        Assertions.assertNotNull(mobileLines);
+        Assertions.assertNotNull(mobileLine);
     }
 
     @Test
     void test2() {
         // Given
-        var mobileLine = MobileLineDTO.builder()
-            .id(5L)
-            .user("Ivan Cano")
+        var mobileLine = CreateMobileLineDTO.builder()
+            .user("seraim")
             .company("Vodafone")
-            .telephones(List.of("699322355", "655328796"))
+            .telephone("699322355")
             .extension("933")
-            .registrationDate(OffsetDateTime.now().minusDays(500))
-            .cancellationDate(OffsetDateTime.now().plusDays(700))
+            .registrationDate(LocalDate.now().minusDays(500))
+            .cancellationDate(LocalDate.now().plusDays(700))
             .rate("The official Java documentation")
-            .link("https://www.java.com/en/")
             .build();
 
         // When

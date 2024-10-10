@@ -1,0 +1,7 @@
+version: '3'
+services:
+
+  bdgwy:
+    image: "mobile_lines_db:0.1"
+    ports:
+      - 5432:5432

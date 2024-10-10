@@ -1,8 +1,7 @@
-package com.jskno.mobile.lines.controller;
+package com.jskno.mobile.lines.controller.file;
 
 import com.jskno.mobile.lines.domain.CreateMobileLineDTO;
 import com.jskno.mobile.lines.domain.GetMobileLineDTO;
-import com.jskno.mobile.lines.service.MobileLineService;
 import com.jskno.mobile.lines.service.line.MobileLineFileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,13 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("v1/mobile-lines")
+@RequestMapping("v1/mobile-lines/file")
 @Slf4j
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"http://localhost:8080", "http://localhost:8081"})
-public class MobileLineController {
+@CrossOrigin(origins = "http://localhost:8080")
+public class MobileLineFileController {
 
-    private final MobileLineService mobileLineService;
+    private final MobileLineFileService mobileLineService;
 
     @PostMapping
     public GetMobileLineDTO addMobileLine(@RequestBody CreateMobileLineDTO mobileLine) {

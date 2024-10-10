@@ -5,8 +5,9 @@ import lombok.Builder;
 
 @Builder
 public record UserDTO(
-    String name,
-    List<MobileLineDTO> mobileLines,
-    String link
+    String login,
+    String fullName,
+    String delegation,
+    List<GetMobileLineDTO> mobileLines
 )
 {}

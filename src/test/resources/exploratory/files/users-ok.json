@@ -1,0 +1,22 @@
+[
+  {
+    "login": "jskno",
+    "fullName": "Jose Cano Galindo",
+    "delegation": "Murcia"
+  },
+  {
+    "login": "arocano",
+    "fullName": "Alvaro Cano",
+    "delegation": "London"
+  },
+  {
+    "login": "evacano",
+    "fullName": "Eva Cano",
+    "delegation": "Geneve"
+  },
+  {
+    "login": "seraim",
+    "fullName": "Raquel Gil",
+    "delegation": "Paris"
+  }
+]

@@ -1,7 +1,27 @@
+import org.codehaus.groovy.runtime.GStringImpl
+
 plugins {
     id 'java'
     id 'org.springframework.boot' version '3.3.3'
     id 'io.spring.dependency-management' version '1.1.6'
+    id 'idea'
+}
+
+idea {
+    module {
+        sourceDirs += file(generated_directory)
+        generatedSourceDirs += file(generated_directory)
+    }
+}
+
+def props = new Properties()
+file("$project.rootDir/src/main/resources/application.properties").withInputStream { props.load(it) }
+file("$project.rootDir/src/test/resources/application-test.properties").withInputStream { props.load(it) }
+
+ext {
+    project_database = props.get("DBNAME")
+    set('springCloudVersion', "2023.0.2")
+    configLocation = "${rootProject.projectDir}/src/main/resources/,${rootProject.projectDir}/src/test/resources/" as GStringImpl
 }
 
 group = 'com.jskno'
@@ -11,6 +31,15 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
     }
+}
+
+repositories {
+    mavenCentral()
+}
+
+wrapper {
+    gradleVersion = "8.5"
+    distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-bin.zip"
 }
 
 configurations {
@@ -24,17 +53,21 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-//    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 //    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 //    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5'
 
-    implementation 'org.liquibase:liquibase-core'
+//    implementation 'org.liquibase:liquibase-core'
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+    implementation("org.mapstruct:mapstruct:${mapstruct_version}")
+    annotationProcessor("org.mapstruct:mapstruct-processor:${mapstruct_version}")
 
     runtimeOnly 'org.postgresql:postgresql'
 
@@ -46,6 +79,72 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+
+springBoot {
+    buildInfo()
+}
+
+jar {
+    enabled = false
+}
+
+compileJava {
+    doFirst {
+        def generatedDirectory = new File(projectDir, generated_directory)
+        if (generatedDirectory.exists()) {
+            file(new File(projectDir, generated_directory)).deleteDir()
+        }
+        //Specify the destination directory for generated sources
+        options.compilerArgs << "-s"
+        options.compilerArgs << "$projectDir".concat(generated_directory)
+        file(new File(projectDir, generated_directory)).mkdirs()
+
+//        options.compilerArgs << "-Amapstruct.defaultComponentModel=spring"
+//        options.compilerArgs << "-Amapstruct.defaultInjectionStrategy=constructor"
+
+        options.compilerArgs += [
+                '-Amapstruct.suppressGeneratorTimestamp=true',
+                '-Amapstruct.suppressGeneratorVersionInfoComment=true',
+                '-Amapstruct.verbose=true',
+                '-Amapstruct.defaultComponentModel=spring',
+                '-Amapstruct.defaultInjectionStrategy=constructor'
+        ]
+    }
+}
+
+clean.doLast {
+    file(new File(projectDir, generated_directory)).deleteDir()
+    file(new File(projectDir, "KarateReports")).deleteDir()
+    file(new File(projectDir, "logs")).deleteDir()
+}
+
+sourceSets.main.java.srcDir file("$projectDir".concat(generated_directory))
+
+
+tasks.register('recreatePostgresDB', Exec) {
+    if (rootProject.ext.project_database) {
+        workingDir "${projectDir}/db/setupDatabase"
+        if (org.gradle.internal.os.OperatingSystem.current().isWindows()) {
+            commandLine 'cmd', '/c', 'setupDB.bat', "${rootProject.ext.project_database}"
+        }
+    }
+}
+//
+//tasks.register('recreateDockerPostgresDB', Exec) {
+//    if (rootProject.ext.project_database) {
+//        workingDir "${projectDir}/db/InicializarDB"
+//        if (org.gradle.internal.os.OperatingSystem.current().isWindows()) {
+//            commandLine 'cmd', '/c', 'InicializarDockerDB.bat', "${rootProject.ext.project_database}"
+//        }
+//    }
+//}
