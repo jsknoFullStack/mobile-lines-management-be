@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("v1/users")
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"http://localhost:8080", "http://localhost:8081"})
+//@CrossOrigin(origins = {"http://localhost:8080", "http://localhost:8081"})
 @Slf4j
 public class UserController {
 

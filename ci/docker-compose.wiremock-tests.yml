@@ -10,10 +10,10 @@ services:
         - ../src/test/resources/exploratory/mappings:/home/wiremock/mappings
         - ../src/test/resources/exploratory/files:/home/wiremock/__files
       ports:
-        - "8080:8080"
+        - "8089:8089"
       entrypoint: ["/docker-entrypoint.sh", "--local-response-templating", "--disable-gzip", "--verbose"]
       command:
-        --port 8080
+        --port 8089
         --max-request-journal-entries 1000
         --verbose
         --global-response-templating

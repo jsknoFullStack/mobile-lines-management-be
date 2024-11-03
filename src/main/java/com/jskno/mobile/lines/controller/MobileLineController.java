@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("v1/mobile-lines")
 @Slf4j
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"http://localhost:8080", "http://localhost:8081"})
+//@CrossOrigin(origins = {"http://localhost:8080", "http://localhost:8081"})
 public class MobileLineController {
 
     private final MobileLineService mobileLineService;
