@@ -10,6 +10,7 @@ import com.jskno.mobile.lines.service.UserService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,6 +52,7 @@ public class UserController {
         mobileLineService.updateMobileLine(updateMobileLineDTO);
     }
 
+    @Secured("ROLE_mobiles_delete")
     @DeleteMapping("/{userId}/mobile-lines/{lineId}")
     public void deleteMobileLine(@PathVariable String userId, @PathVariable Long lineId) {
         mobileLineService.deleteMobileLine(userId, lineId);

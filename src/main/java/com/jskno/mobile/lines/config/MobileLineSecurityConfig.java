@@ -12,6 +12,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher.Builder;
@@ -21,7 +23,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 @Configuration
-@EnableMethodSecurity
+@EnableMethodSecurity(securedEnabled=true, prePostEnabled=true)
+@EnableWebSecurity
 public class MobileLineSecurityConfig {
 
     @Bean
@@ -29,18 +32,53 @@ public class MobileLineSecurityConfig {
         return new Builder(introspector);
     }
 
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
+//        http
+//            .cors(Customizer.withDefaults())
+//            .authorizeHttpRequests(authorize -> authorize
+//                .requestMatchers(mvc.pattern(HttpMethod.GET, "/v1/users**")).hasAnyAuthority("SCOPE_read", "SCOPE_write")
+//                .requestMatchers(mvc.pattern(HttpMethod.POST, "v1/users**")).hasAuthority("SCOPE_write")
+//                .requestMatchers(mvc.pattern(HttpMethod.PUT, "v1/users**")).hasAuthority("SCOPE_write")
+//                .requestMatchers(mvc.pattern(HttpMethod.DELETE, "v1/users**")).hasAuthority("SCOPE_write")
+//                .requestMatchers(mvc.pattern(HttpMethod.POST, "v1/mobile-lines*")).hasAuthority("SCOPE_write")
+//                .anyRequest().authenticated())
+//            .oauth2ResourceServer(oauthResourceServer -> oauthResourceServer.jwt(Customizer.withDefaults()));
+//        return http.build();
+//    }
+
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
+//        http
+//            .cors(Customizer.withDefaults())
+//            .authorizeHttpRequests(authorize -> authorize
+//                .requestMatchers(mvc.pattern(HttpMethod.GET, "/v1/users**")).hasAnyAuthority("SCOPE_mobiles_read", "SCOPE_mobiles_write")
+//                .requestMatchers(mvc.pattern(HttpMethod.POST, "v1/users**")).hasAuthority("SCOPE_mobiles_write")
+//                .requestMatchers(mvc.pattern(HttpMethod.PUT, "v1/users**")).hasAuthority("SCOPE_mobiles_write")
+//                .requestMatchers(mvc.pattern(HttpMethod.DELETE, "v1/users**")).hasAuthority("SCOPE_mobiles_write")
+//                .requestMatchers(mvc.pattern(HttpMethod.POST, "v1/mobile-lines*")).hasAuthority("SCOPE_mobiles_write")
+//                .anyRequest().authenticated())
+//            .oauth2ResourceServer(oauthResourceServer -> oauthResourceServer.jwt(Customizer.withDefaults()));
+//        return http.build();
+//    }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
+
+        JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
+        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(new KeyCloakRoleConverter());
+
         http
             .cors(Customizer.withDefaults())
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers(mvc.pattern(HttpMethod.GET, "/v1/users**")).hasAnyAuthority("SCOPE_read", "SCOPE_write")
-                .requestMatchers(mvc.pattern(HttpMethod.POST, "v1/users**")).hasAuthority("SCOPE_write")
-                .requestMatchers(mvc.pattern(HttpMethod.PUT, "v1/users**")).hasAuthority("SCOPE_write")
-                .requestMatchers(mvc.pattern(HttpMethod.DELETE, "v1/users**")).hasAuthority("SCOPE_write")
-                .requestMatchers(mvc.pattern(HttpMethod.POST, "v1/mobile-lines*")).hasAuthority("SCOPE_write")
+                .requestMatchers(mvc.pattern(HttpMethod.GET, "/v1/users**")).hasRole("mobiles_read")
+                .requestMatchers(mvc.pattern(HttpMethod.POST, "v1/users**")).hasRole("mobiles_write")
+                .requestMatchers(mvc.pattern(HttpMethod.PUT, "v1/users**")).hasRole("mobiles_write")
+//                .requestMatchers(mvc.pattern(HttpMethod.DELETE, "v1/users**")).hasRole("mobiles_delete")
+                .requestMatchers(mvc.pattern(HttpMethod.POST, "v1/mobile-lines*")).hasRole("mobiles_write")
                 .anyRequest().authenticated())
-            .oauth2ResourceServer(oauthResourceServer -> oauthResourceServer.jwt(Customizer.withDefaults()));
+            .oauth2ResourceServer(oauthResourceServer ->
+                oauthResourceServer.jwt(jwtConfigurer -> jwtConfigurer.jwtAuthenticationConverter(jwtAuthenticationConverter)));
         return http.build();
     }
 
@@ -55,7 +93,5 @@ public class MobileLineSecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
-
 
 }
